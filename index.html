@@ -71,6 +71,8 @@
 			directionalLight.shadow.bias = - 0.00006;
 			scene.add( directionalLight );
 
+
+
 			const container = document.getElementById( 'container' );
 
 			const renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -96,6 +98,16 @@
 			const sphereGeometry = new THREE.IcosahedronGeometry( SPHERE_RADIUS, 5 );
 			const sphereMaterial = new THREE.MeshLambertMaterial( { color: 0xdede8d } );
 
+			const light1 = new THREE.PointLight( 0xffffff, 1, 0, 100 );
+			light1.position.set( 0, 2, 0 );
+			scene.add( light1 );
+			const light2 = new THREE.PointLight( 0xffffff, 1, 0, 100 );
+			light2.position.set( 5, 2, 5 );
+			scene.add( light2 );
+			const light3 = new THREE.PointLight( 0xffffff, 1, 0, 100 );
+			light3.position.set( -5, 2, -5 );
+			scene.add( light3 );
+
 			const spheres = [];
 			let sphereIdx = 0;
 
@@ -117,7 +129,7 @@
 
 			const worldOctree = new Octree();
 
-			const playerCollider = new Capsule( new THREE.Vector3( 0, 0.35, 0 ), new THREE.Vector3( 0, 5, 0 ), 0.35 );
+			const playerCollider = new Capsule( new THREE.Vector3( 0, 0.35, 0 ), new THREE.Vector3( 0, 1, 0 ), 0.35 );
 
 			const playerVelocity = new THREE.Vector3();
 			const playerDirection = new THREE.Vector3();
@@ -207,6 +219,11 @@
 				if ( result ) {
 
 					playerOnFloor = result.normal.y > 0;
+					// if(!playerOnFloor){
+					// 	if(playerVelocity.y<0){
+					// 		playerOnFloor=true;
+					// 	}
+					// }
 
 					if ( ! playerOnFloor ) {
 
@@ -224,6 +241,11 @@
 
 				let damping = Math.exp( - 4 * deltaTime ) - 1;
 
+				// if(!playerOnFloor){
+				// 	if(playerVelocity.y<0){
+				// 		playerOnFloor=true;
+				// 	}
+				// }
 				if ( ! playerOnFloor ) {
 
 					playerVelocity.y -= GRAVITY * deltaTime;
@@ -398,12 +420,11 @@
 					playerVelocity.add( getSideVector().multiplyScalar( speedDelta ) );
 
 				}
-
 				if ( playerOnFloor ) {
 
 					if ( keyStates[ 'Space' ] ) {
 
-						playerVelocity.y = 15;
+						playerVelocity.y = 5;
 
 					}
 
@@ -412,9 +433,11 @@
 			}
 
 			const loader = new GLTFLoader();
+			
+			loader.load( 'ruangan2.gltf', ( gltf ) => {
+				// gltf.position.z+=1
 
-			loader.load( 'berlantai.gltf', ( gltf ) => {
-
+				
 				scene.add( gltf.scene );
 
 				worldOctree.fromGraphNode( gltf.scene );
@@ -423,6 +446,7 @@
 
 					if ( child.isMesh ) {
 
+						// child.scale.set(0.5,0.5,0.5);
 						child.castShadow = true;
 						child.receiveShadow = true;
 
@@ -448,20 +472,36 @@
 
 					} );
 
-				animate();
+					animate();
+					
+				} );
+				
+				// const geometry = new THREE.PlaneGeometry( 1, 1 );
+				// const material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+				// const plane = new THREE.Mesh( geometry, material );
+				// scene.add( plane );
 
-			} );
+				var geometry2 = new THREE.PlaneGeometry( 1000, 1000, 1, 1 );
+				const material2 = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+				var floor = new THREE.Mesh( geometry2, material2 );
+				floor.position.x=0;
+				floor.position.y=0;
+				floor.position.z=0;
+				floor.rotation.x = Math.PI / 180 * -90;
+				worldOctree.fromGraphNode( floor );
+				scene.add( floor ); 
 
 			function teleportPlayerIfOob() {
 
 				if ( camera.position.y <= - 25 ) {
-
-					playerCollider.start.set( 0, 0.35, 0 );
+					
+					// camera.position.y=3
+					playerCollider.start.set( 0, 1, 0 );
 					playerCollider.end.set( 0, 1, 0 );
-					playerCollider.radius = 0.35;
+					playerCollider.radius = 0.1;
 					camera.position.copy( playerCollider.end );
-					camera.rotation.set( 0, 0, 0 );
-
+					camera.rotation.set( 0, 1, 0 );
+					
 				}
 
 			}
