@@ -476,20 +476,11 @@
 					
 				} );
 				
-				// const geometry = new THREE.PlaneGeometry( 1, 1 );
-				// const material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
-				// const plane = new THREE.Mesh( geometry, material );
-				// scene.add( plane );
-
-				// const texture = new THREE.TextureLoader().load('path/to/texture.jpg');
-				// texture.repeat.set(4, 4); // Mengulang tekstur 4 kali secara horizontal dan vertikal
-				// const material = new THREE.MeshBasicMaterial({ map: texture });
 				var geometry2 = new THREE.PlaneGeometry( 1000, 1000, 1, 1 );
 				const texture = new THREE.TextureLoader().load('grass.jpg');
 				texture.wrapS = THREE.RepeatWrapping;
 				texture.wrapT = THREE.RepeatWrapping;
-				texture.repeat.set(150, 150); // Mengulang tekstur 4 kali secara horizontal dan vertikal
-
+				texture.repeat.set(150, 150); // Mengulang tekstur secara horizontal dan vertikal
 				const material = new THREE.MeshStandardMaterial({
 					color: 0xffffff,
 					map: texture,
@@ -507,6 +498,36 @@
 				worldOctree.fromGraphNode( floor );
 				scene.add( floor ); 
 
+				//PIGURA
+				// Import objek pigura
+				loader.load('/public/picture/scene.gltf', function (gltf) {
+					const pigura = gltf.scene;
+
+					// Menyesuaikan skala, posisi, dan rotasi pigura
+					pigura.scale.set(0.1, 0.1, 0.1);
+					pigura.position.set(2, 1, 0);
+					pigura.rotation.set(0, Math.PI / 2, 0);
+
+					// Mengimpor tekstur
+					const texture = new THREE.TextureLoader().load('/public/picture/textures/vg.jpg');
+
+					// Membuat materi dengan tekstur
+					const material = new THREE.MeshStandardMaterial({
+						map: texture
+					});
+
+					// Mengaplikasikan materi pada objek pigura
+					pigura.traverse(function (child) { 
+						if (child instanceof THREE.Mesh) { 
+						child.material = material;
+						}
+					});
+
+					// Menambahkan objek pigura ke scene
+					scene.add(pigura);
+				});
+
+				
 			function teleportPlayerIfOob() {
 
 				if ( camera.position.y <= - 25 ) {
