@@ -45,7 +45,7 @@
 
 			const scene = new THREE.Scene();
 			const textureLoader = new THREE.TextureLoader();
-			scene.background = textureLoader.load("images.jpeg");
+			scene.background = textureLoader.load("sky.jpg"); 
 			// scene.background = new THREE.Color( 0xffffff );
 			// scene.fog = new THREE.Fog( 0x88ccee, 0, 50 );
 
@@ -61,9 +61,9 @@
 			// directionalLight.castShadow = true;	
 			directionalLight.shadow.camera.near = 0.01;
 			directionalLight.shadow.camera.far = 500;
-			// directionalLight.shadow.camera.right = 0;
-			// directionalLight.shadow.camera.left = - 40;
-			directionalLight.shadow.camera.top	= 10;
+			directionalLight.shadow.camera.right = 0;
+			directionalLight.shadow.camera.left = - 40;
+			directionalLight.shadow.camera.top	= 0;
 			directionalLight.shadow.camera.bottom = -30;
 			directionalLight.shadow.mapSize.width = 1024;
 			directionalLight.shadow.mapSize.height = 1024;
@@ -129,7 +129,7 @@
 
 			const worldOctree = new Octree();
 
-			const playerCollider = new Capsule( new THREE.Vector3( 0, 0.35, 0 ), new THREE.Vector3( 0, 1, 0 ), 0.35 );
+			const playerCollider = new Capsule( new THREE.Vector3( 0, 0.35, 0 ), new THREE.Vector3( 0, 2, 0 ), 0.35 );
 
 			const playerVelocity = new THREE.Vector3();
 			const playerDirection = new THREE.Vector3();
@@ -434,7 +434,7 @@
 
 			const loader = new GLTFLoader();
 			
-			loader.load( 'ruangan2.gltf', ( gltf ) => {
+			loader.load( 'ruangan3.gltf', ( gltf ) => {
 				// gltf.position.z+=1
 
 				
@@ -481,13 +481,29 @@
 				// const plane = new THREE.Mesh( geometry, material );
 				// scene.add( plane );
 
+				// const texture = new THREE.TextureLoader().load('path/to/texture.jpg');
+				// texture.repeat.set(4, 4); // Mengulang tekstur 4 kali secara horizontal dan vertikal
+				// const material = new THREE.MeshBasicMaterial({ map: texture });
 				var geometry2 = new THREE.PlaneGeometry( 1000, 1000, 1, 1 );
-				const material2 = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
-				var floor = new THREE.Mesh( geometry2, material2 );
+				const texture = new THREE.TextureLoader().load('grass.jpg');
+				texture.wrapS = THREE.RepeatWrapping;
+				texture.wrapT = THREE.RepeatWrapping;
+				texture.repeat.set(150, 150); // Mengulang tekstur 4 kali secara horizontal dan vertikal
+
+				const material = new THREE.MeshStandardMaterial({
+					color: 0xffffff,
+					map: texture,
+					roughness: 4,
+					metalness: 1,
+					repeat: new THREE.Vector2(2, 2) // Skala ulangan material menjadi 2 kali secara horizontal dan vertikal
+				});
+
+				var floor = new THREE.Mesh( geometry2, material );
 				floor.position.x=0;
 				floor.position.y=0;
 				floor.position.z=0;
 				floor.rotation.x = Math.PI / 180 * -90;
+				// floor.material = material;
 				worldOctree.fromGraphNode( floor );
 				scene.add( floor ); 
 

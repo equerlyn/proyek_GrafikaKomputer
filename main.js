@@ -174,7 +174,7 @@ function init() {
 
     const loader = new GLTFLoader();
     loader.load(
-    'public/museum.gltf',
+    'public/ruangan3.gltf',
     function (gltf) {
         const model = gltf.scene;
         scene.add(model);
