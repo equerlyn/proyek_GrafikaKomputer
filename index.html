@@ -93,15 +93,18 @@
 			const sphereGeometry = new THREE.IcosahedronGeometry( SPHERE_RADIUS, 5 );
 			const sphereMaterial = new THREE.MeshLambertMaterial( { color: 0xdede8d } );
 
-			const light1 = new THREE.PointLight( 0xffffff, 0.3, 0, 100 );
+			const light1 = new THREE.PointLight( 0xded6c1, 0.7, 0, 100 );
 			light1.position.set( 0, 2, 0 );
 			scene.add( light1 );
-			const light2 = new THREE.PointLight( 0xffffff, 0.3, 0, 100 );
-			light2.position.set( 5, 2, 5 );
+			const light2 = new THREE.PointLight( 0xded6c1, 0.5, 0, 100 );
+			light2.position.set( 0, 2, 2 );
 			scene.add( light2 );
-			const light3 = new THREE.PointLight( 0xffffff, 0.3, 0, 100 );
-			light3.position.set( -5, 2, -5 );
+			const light3 = new THREE.PointLight( 0xded6c1, 0.3, 0, 100 );
+			light3.position.set( 0, 2, 12 );
 			scene.add( light3 );
+			const light4 = new THREE.PointLight( 0xded6c1, 0.6, 0, 10 );
+			light4.position.set( 4.6, 2.6, -12 );
+			scene.add( light4 );
 
 			const spheres = [];
 			let sphereIdx = 0;
@@ -409,7 +412,7 @@
 					const pigura = gltf.scene;
 					// Menyesuaikan skala, posisi, dan rotasi pigura
 					pigura.scale.set(0.4, 0.4, 0.4);
-					pigura.position.set(0, 1.7, -12.4);
+					pigura.position.set(0, 1.5, -12.4);
 					pigura.rotation.set(0,0, 0);
 					// pigura.receiveShadow = true;
 					// Mengimpor tekstur
@@ -417,6 +420,7 @@
 					// Membuat materi dengan tekstur
 					const material = new THREE.MeshStandardMaterial({
 						map: texture,
+						color: 0xa2a2a2,
 						// shadowSide: THREE.DoubleSide,
 					});
 					// Mengaplikasikan materi pada objek pigura
@@ -439,23 +443,32 @@
 					scene.add(meja);
 				});
 
-				loader.load('/public/table_lamp/scene.gltf', function (gltf) {
+				loader.load('/public/painting_light/scene.gltf', function (gltf) {
 					const lampu = gltf.scene;
-					// Menyesuaikan skala, posisi, dan rotasi pigura
-					lampu.scale.set(0.04, 0.04, 0.04);
-					lampu.position.set(4.6, 1, -12);
+					lampu.scale.set(0.5, 0.5, 0.5);
+					lampu.position.set(-1.7, 6.4, -12.5);
 					lampu.rotation.set(0,0, 0);
-					const texture = new THREE.TextureLoader().load('/public/table_lamp/textures/Material__25_baseColor.png');
+
+					worldOctree.fromGraphNode( lampu );
+					scene.add(lampu);
+				});
+
+				loader.load('/public/tablet_folder/scene.gltf', function (gltf) {
+					const folder = gltf.scene;
+					folder.scale.set(0.04, 0.04, 0.04);
+					folder.position.set(4.6, 1.1, -12);
+					folder.rotation.set(0,0, 0);
+					const texture = new THREE.TextureLoader().load('/public/tablet_folder/textures/blinn2_baseColor.png');
 					const material = new THREE.MeshStandardMaterial({
 						map: texture,
 					});
-					lampu.traverse(function (child) { 
+					folder.traverse(function (child) { 
 						if (child instanceof THREE.Mesh) { 
 							child.material = material;
 						}
 					});
-					worldOctree.fromGraphNode( lampu );
-					scene.add(lampu);
+					worldOctree.fromGraphNode( folder );
+					scene.add(folder);
 				});
 
 			function teleportPlayerIfOob() {
