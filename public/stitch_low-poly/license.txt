@@ -1,0 +1,11 @@
+Model Information:
+* title:	Stitch Low-Poly
+* source:	https://sketchfab.com/3d-models/stitch-low-poly-d630fdc8b7e64920883d03b5bdf75ccb
+* author:	eloiriel (https://sketchfab.com/eloiriel)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Stitch Low-Poly" (https://sketchfab.com/3d-models/stitch-low-poly-d630fdc8b7e64920883d03b5bdf75ccb) by eloiriel (https://sketchfab.com/eloiriel) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

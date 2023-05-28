@@ -1,0 +1,11 @@
+Model Information:
+* title:	Pouffe Table Stool 3D Scan
+* source:	https://sketchfab.com/3d-models/pouffe-table-stool-3d-scan-9e6b1979f59544279fa949a9210225b2
+* author:	grafi (https://sketchfab.com/zdenkoroman)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Pouffe Table Stool 3D Scan" (https://sketchfab.com/3d-models/pouffe-table-stool-3d-scan-9e6b1979f59544279fa949a9210225b2) by grafi (https://sketchfab.com/zdenkoroman) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

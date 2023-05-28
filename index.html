@@ -152,9 +152,9 @@
 				mouseTime = performance.now();
 			} );
 
-			document.addEventListener( 'mouseup', () => {
-				if ( document.pointerLockElement !== null ) throwBall();
-			} );
+			// document.addEventListener( 'mouseup', () => {
+			// 	if ( document.pointerLockElement !== null ) throwBall();
+			// } );
 
 			document.body.addEventListener( 'mousemove', ( event ) => {
 				if ( document.pointerLockElement === document.body ) {
@@ -172,20 +172,20 @@
 				renderer.setSize( window.innerWidth, window.innerHeight );
 			}
 
-			function throwBall() {
-				const sphere = spheres[ sphereIdx ];
+			// function throwBall() {
+			// 	const sphere = spheres[ sphereIdx ];
 
-				camera.getWorldDirection( playerDirection );
+			// 	camera.getWorldDirection( playerDirection );
 
-				sphere.collider.center.copy( playerCollider.end ).addScaledVector( playerDirection, playerCollider.radius * 1.5 );
+			// 	sphere.collider.center.copy( playerCollider.end ).addScaledVector( playerDirection, playerCollider.radius * 1.5 );
 
-				const impulse = 15 + 30 * ( 1 - Math.exp( ( mouseTime - performance.now() ) * 0.001 ) );
+			// 	const impulse = 15 + 30 * ( 1 - Math.exp( ( mouseTime - performance.now() ) * 0.001 ) );
 
-				sphere.velocity.copy( playerDirection ).multiplyScalar( impulse );
-				sphere.velocity.addScaledVector( playerVelocity, 2 );
+			// 	sphere.velocity.copy( playerDirection ).multiplyScalar( impulse );
+			// 	sphere.velocity.addScaledVector( playerVelocity, 2 );
 
-				sphereIdx = ( sphereIdx + 1 ) % spheres.length;
-			}
+			// 	sphereIdx = ( sphereIdx + 1 ) % spheres.length;
+			// }
 
 			function playerCollisions() {
 				const result = worldOctree.capsuleIntersect( playerCollider );
@@ -436,40 +436,60 @@
 				loader.load('/public/vintage_table/scene.gltf', function (gltf) {
 					const meja = gltf.scene;
 					meja.scale.set(1.3, 1.3, 1.3);
-					meja.position.set(4.5, 0, -12);
+					meja.position.set(4.5, 0, -11.5);
 					meja.rotation.set(0,0, 0);
 
 					worldOctree.fromGraphNode( meja );
 					scene.add(meja);
 				});
 
-				loader.load('/public/painting_light/scene.gltf', function (gltf) {
+				loader.load('/public/wall_lamp/scene.gltf', function (gltf) {
 					const lampu = gltf.scene;
-					lampu.scale.set(0.5, 0.5, 0.5);
-					lampu.position.set(-1.7, 6.4, -12.5);
+					lampu.scale.set(0.01, 0.01, 0.01);
+					lampu.position.set(0, 6.4, -12.5);
 					lampu.rotation.set(0,0, 0);
 
 					worldOctree.fromGraphNode( lampu );
 					scene.add(lampu);
 				});
 
-				loader.load('/public/tablet_folder/scene.gltf', function (gltf) {
-					const folder = gltf.scene;
-					folder.scale.set(0.04, 0.04, 0.04);
-					folder.position.set(4.6, 1.1, -12);
-					folder.rotation.set(0,0, 0);
-					const texture = new THREE.TextureLoader().load('/public/tablet_folder/textures/blinn2_baseColor.png');
-					const material = new THREE.MeshStandardMaterial({
-						map: texture,
-					});
-					folder.traverse(function (child) { 
-						if (child instanceof THREE.Mesh) { 
-							child.material = material;
-						}
-					});
-					worldOctree.fromGraphNode( folder );
-					scene.add(folder);
+				loader.load('/public/stitch_low-poly/scene.gltf', function (gltf) {
+					const stitch = gltf.scene;
+					stitch.scale.set(0.4, 0.4, 0.4);
+					stitch.position.set(4.6, 1.8, -11.5);
+					stitch.rotation.set(0, 5.6, 0);
+
+					worldOctree.fromGraphNode( stitch );
+					scene.add(stitch);
 				});
+
+				// loader.load('/public/tablet_folder/scene.gltf', function (gltf) {
+				// 	const folder = gltf.scene;
+				// 	folder.scale.set(0.04, 0.04, 0.04);
+				// 	folder.position.set(4.6, 1.1, -11.5);
+				// 	folder.rotation.set(0, 5, 0);
+				// 	const texture = new THREE.TextureLoader().load('/public/tablet_folder/textures/paper.jpg');
+				// 	const material = new THREE.MeshStandardMaterial({
+				// 		map: texture,
+				// 		color: 0xa2a2a2,
+				// 	});
+				// 	const scale = 3.2; // Faktor skala untuk mengecilkan tekstur
+				// 	material.map.repeat.x = scale; // Mengecilkan tekstur secara horizontal
+				// 	material.map.repeat.y = scale; // Mengecilkan tekstur secara vertikal
+
+				// 	const offsetX = -0.4; // Geser tekstur secara horizontal
+				// 	const offsetY = -0.7; // Geser tekstur secara vertikal
+				// 	material.map.offset.x = offsetX; // Menggeser tekstur secara horizontal
+				// 	material.map.offset.y = offsetY; // Menggeser tekstur secara vertikal
+
+				// 	folder.traverse(function (child) { 
+				// 		if (child instanceof THREE.Mesh) { 
+				// 			child.material = material;
+				// 		}
+				// 	});
+				// 	// worldOctree.fromGraphNode( folder );
+				// 	scene.add(folder);
+				// });
 
 			function teleportPlayerIfOob() {
 				if ( camera.position.y <= -25 ) {
