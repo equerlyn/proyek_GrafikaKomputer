@@ -24,7 +24,6 @@
 				}
 			}
 		</script> -->
-
 		<script type="module">
             import * as THREE from 'three';
 			import Stats from 'three/addons/libs/stats.module.js';
@@ -37,6 +36,7 @@
 			import { Capsule } from 'three/addons/math/Capsule.js';
 
 			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+			import  TWEEN  from '@tweenjs/tween.js'
 
 			const clock = new THREE.Clock();
 
@@ -45,7 +45,9 @@
 			scene.background = textureLoader.load("sky.jpg"); 
 			scene.fog = new THREE.Fog( 0xffffee, 0, 500 );
 
+			var pertama=true;
 			const camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 1000 );
+			
 			camera.rotation.order = 'YXZ';
 
 			//(pencahayaan setengah bola) yang digunakan untuk memberikan pencahayaan tambahan pada scene
@@ -54,7 +56,7 @@
 			scene.add( fillLight1 );
 
 			const directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
-			directionalLight.position.set( - 5, 25, - 1 );
+			directionalLight.position.set( 0, 20, 0 );
 			// directionalLight.castShadow = true;	
 			// directionalLight.shadow.camera.near = 0.01;
 			// directionalLight.shadow.camera.far = 500;
@@ -67,6 +69,24 @@
 			// directionalLight.shadow.radius = 10;
 			// directionalLight.shadow.bias = - 0.00006;
 			scene.add( directionalLight );
+
+			// const directionalLight2 = new THREE.DirectionalLight( 0xded6c1, 1 );
+			// directionalLight2.position.set( 0, 6.35, -12 );
+			// directionalLight2.target.position.set( -0, 0, -11 );
+			// directionalLight2.castShadow = true;	
+			// directionalLight2.shadow.camera.near = 0.01;
+			// directionalLight2.shadow.camera.far = 500;
+			// directionalLight2.shadow.camera.right = 0;
+			// directionalLight2.shadow.camera.left = - 40;
+			// directionalLight2.shadow.camera.top	= 0;
+			// directionalLight2.shadow.camera.bottom = -30;
+			// directionalLight2.shadow.mapSize.width = 1024;
+			// directionalLight2.shadow.mapSize.height = 1024;
+			// directionalLight2.shadow.radius = 10;
+			// directionalLight2.shadow.bias = - 0.00006;
+			// scene.add( directionalLight2 );
+
+
 
 			const container = document.getElementById( 'container' );
 
@@ -93,18 +113,30 @@
 			const sphereGeometry = new THREE.IcosahedronGeometry( SPHERE_RADIUS, 5 );
 			const sphereMaterial = new THREE.MeshLambertMaterial( { color: 0xdede8d } );
 
-			const light1 = new THREE.PointLight( 0xded6c1, 0.7, 0, 100 );
-			light1.position.set( 0, 2, 0 );
+			const spherez = new THREE.SphereGeometry( 0.5, 16, 8 );
+			const light1 = new THREE.PointLight( 0xc9c9c9, 0.2, 0, 100 );
+			// light1.add( new THREE.Mesh( spherez, new THREE.MeshBasicMaterial( { color: 0xffffff } ) ) );
+			light1.position.set( 5, 6.5, 12 );
 			scene.add( light1 );
-			const light2 = new THREE.PointLight( 0xded6c1, 0.5, 0, 100 );
-			light2.position.set( 0, 2, 2 );
+			const light2 = new THREE.PointLight( 0xc9c9c9, 0.2, 0, 100 );
+			light2.position.set( -5, 6.5, 12 );
 			scene.add( light2 );
-			const light3 = new THREE.PointLight( 0xded6c1, 0.3, 0, 100 );
-			light3.position.set( 0, 2, 12 );
-			scene.add( light3 );
-			const light4 = new THREE.PointLight( 0xded6c1, 0.6, 0, 10 );
-			light4.position.set( 4.6, 2.6, -12 );
-			scene.add( light4 );
+			// const light3 = new THREE.PointLight( 0xded6c1, 0.3, 0, 100 );
+			// light3.position.set( 0, 2, 12 );
+			// scene.add( light3 );
+			// const light4 = new THREE.PointLight( 0xded6c1, 0.7, 0, 10 );
+			// light4.position.set( -0, 6.35, -11 );
+			// scene.add( light4 );
+			
+			const light5 = new THREE.PointLight( 0xded6c1, 1, 0, 10 );
+			// light5.add( new THREE.Mesh( spherez, new THREE.MeshBasicMaterial( { color: 0xffaa00 } ) ) );
+			light5.position.set( -0, 3.5, -12 );
+			scene.add( light5 );
+			// const geometry10 = new THREE.BoxGeometry( 1,1,1 );
+			// const material10 = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+			// const cube10 = new THREE.Mesh( geometry10, material10 );
+			// cube10.position.set( -0, 3.5, -11 );
+			// scene.add( cube10 );
 
 			const spheres = [];
 			let sphereIdx = 0;
@@ -125,10 +157,13 @@
 
 			const worldOctree = new Octree();
 
-			const playerCollider = new Capsule( new THREE.Vector3( 0, 0.35, 0 ), new THREE.Vector3( 0, 2, 0 ), 0.35 );
+			const playerCollider = new Capsule( new THREE.Vector3( -1, 0.35, 20 ), new THREE.Vector3( -1, 2, 20 ), 0.35 );
 
 			const playerVelocity = new THREE.Vector3();
 			const playerDirection = new THREE.Vector3();
+
+
+
 
 			let playerOnFloor = false;
 			let mouseTime = 0;
@@ -383,6 +418,7 @@
 				// 	helper.visible = value;
 				// } );
 
+				
 				animate();
 			} );
 				
@@ -407,6 +443,29 @@
 				worldOctree.fromGraphNode( floor );
 				scene.add( floor ); 
 
+				//marmer
+				var geometry3 = new THREE.PlaneGeometry( 11.53, 26, 1, 1 );
+				const texture3 = new THREE.TextureLoader().load('marble-texture.jpg');
+				texture3.wrapS = THREE.RepeatWrapping;
+				texture3.wrapT = THREE.RepeatWrapping;
+				texture3.repeat.set(10,10); // Mengulang tekstur secara horizontal dan vertikal
+				const material3 = new THREE.MeshStandardMaterial({
+					color: 0xffffff,
+					map: texture3,
+					roughness: 4,
+					metalness: 1,
+					repeat: new THREE.Vector2(2, 2) // Skala ulangan material menjadi 2 kali secara horizontal dan vertikal
+				});
+				var floor3 = new THREE.Mesh( geometry3, material3 );
+				floor3.position.x=0;
+				floor3.position.y=0.012;
+				// floor3.position.y=3;
+				floor3.position.z=0;
+				floor3.rotation.x = Math.PI / 180 * -90;
+				worldOctree.fromGraphNode( floor3 );
+				scene.add( floor3 ); 
+
+				//uncomment
 				//PIGURA
 				loader.load('/picture/scene.gltf', function (gltf) {
 					const pigura = gltf.scene;
@@ -420,7 +479,7 @@
 					// Membuat materi dengan tekstur
 					const material = new THREE.MeshStandardMaterial({
 						map: texture,
-						color: 0xa2a2a2,
+						color: 0xded6c1,
 						// shadowSide: THREE.DoubleSide,
 					});
 					// Mengaplikasikan materi pada objek pigura
@@ -433,6 +492,101 @@
 					scene.add(pigura);
 				});
 
+
+
+				//EVE
+				var robots;
+				loader.load('/eve.glb', function (gltf) {
+					const robot = gltf.scene;
+					// Menyesuaikan skala, posisi, dan rotasi pigura
+					robot.scale.set(2,2,2);
+					robot.position.set(5, 0.5, 12);
+					// robot.rotation.copy(playerCollider.end)
+					robot.receiveShadow = true;
+					robots=robot;
+					worldOctree.fromGraphNode( robot );
+					scene.add(robot);
+				});
+				function updateRobots(deltaTime) {
+					if (robots) {
+						// const target = new THREE.Vector3.copy(playerCollider.end);
+						robots.lookAt(playerCollider.end.x, 0.35 , playerCollider.end.z);
+					}
+				}
+
+				const curve = new THREE.CatmullRomCurve3([
+					new THREE.Vector3(5, 0.5, 12),
+					new THREE.Vector3(4, 0.5, 12),
+					new THREE.Vector3(3, 0.5, 12),
+					new THREE.Vector3(2, 0.5, 12),
+					new THREE.Vector3(1, 0.5, 12),
+					new THREE.Vector3(0, 0.5, 12),
+					new THREE.Vector3(-1, 0.5, 12),
+					new THREE.Vector3(-2, 0.5, 12),
+					new THREE.Vector3(-3, 0.5, 12),
+					new THREE.Vector3(-4, 0.5, 12),
+					new THREE.Vector3(-5, 0.5, 12),
+					new THREE.Vector3(-5, 0.5, 11),
+					new THREE.Vector3(-5, 0.5, 10),
+					new THREE.Vector3(-5, 0.5, 9),
+					new THREE.Vector3(-5, 0.5, 8),
+					new THREE.Vector3(-5, 0.5, 7),
+					new THREE.Vector3(-5, 0.5, 6),
+					new THREE.Vector3(-5, 0.5, 5),
+					new THREE.Vector3(-5, 0.5, 4),
+					new THREE.Vector3(-5, 0.5, 3),
+					new THREE.Vector3(-5, 0.5, 2),
+					new THREE.Vector3(-5, 0.5, 1),
+					new THREE.Vector3(-5, 0.5, 0),
+					new THREE.Vector3(-5, 0.5, -1),
+					new THREE.Vector3(-5, 0.5, -2),
+					new THREE.Vector3(-5, 0.5, -3),
+					new THREE.Vector3(-5, 0.5, -4),
+					new THREE.Vector3(-5, 0.5, -5),
+					new THREE.Vector3(-5, 0.5, -6),
+					new THREE.Vector3(-5, 0.5, -7),
+					new THREE.Vector3(-5, 0.5, -8),
+					new THREE.Vector3(-5, 0.5, -9),
+					new THREE.Vector3(-4, 0.5, -9),
+					new THREE.Vector3(-3, 0.5, -9),
+					new THREE.Vector3(-2, 0.5, -9),
+					new THREE.Vector3(-1, 0.5, -9),
+					new THREE.Vector3(0, 0.5, -9),
+					new THREE.Vector3(1, 0.5, -9),
+					new THREE.Vector3(2, 0.5, -9),
+					new THREE.Vector3(3, 0.5, -9),
+					new THREE.Vector3(4, 0.5, -9),
+					new THREE.Vector3(5, 0.5, -9),
+					new THREE.Vector3(5, 0.5, -8),
+					new THREE.Vector3(5, 0.5, -7),
+					new THREE.Vector3(5, 0.5, -6),
+					new THREE.Vector3(5, 0.5, -5),
+					new THREE.Vector3(5, 0.5, -4),
+					new THREE.Vector3(5, 0.5, -3),
+					new THREE.Vector3(5, 0.5, -2),
+					new THREE.Vector3(5, 0.5, -1),
+					new THREE.Vector3(5, 0.5, 0),
+					new THREE.Vector3(5, 0.5, 1),
+					new THREE.Vector3(5, 0.5, 2),
+					new THREE.Vector3(5, 0.5, 3),
+					new THREE.Vector3(5, 0.5, 4),
+					new THREE.Vector3(5, 0.5, 5),
+					new THREE.Vector3(5, 0.5, 6),
+					new THREE.Vector3(5, 0.5, 7),
+					new THREE.Vector3(5, 0.5, 8),
+					new THREE.Vector3(5, 0.5, 9),
+					new THREE.Vector3(5, 0.5, 10),
+					new THREE.Vector3(5, 0.5, 11),
+					new THREE.Vector3(5, 0.5, 12),
+				]);
+				const targetPositions = curve.getPoints(500);
+				for (let i = 0; i < targetPositions.length - 1; i++) {
+					const direction = targetPositions[i + 1].clone().sub(targetPositions[i]);
+				}
+
+
+
+				//uncomment
 				loader.load('/public/vintage_table/scene.gltf', function (gltf) {
 					const meja = gltf.scene;
 					meja.scale.set(1.3, 1.3, 1.3);
@@ -446,13 +600,15 @@
 				loader.load('/public/wall_lamp/scene.gltf', function (gltf) {
 					const lampu = gltf.scene;
 					lampu.scale.set(0.01, 0.01, 0.01);
-					lampu.position.set(0, 6.4, -12.5);
+					lampu.position.set(0, 6.4, -11.3);
 					lampu.rotation.set(0,0, 0);
 
 					worldOctree.fromGraphNode( lampu );
 					scene.add(lampu);
 				});
 
+
+				// uncomment
 				loader.load('/public/stitch_low-poly/scene.gltf', function (gltf) {
 					const stitch = gltf.scene;
 					stitch.scale.set(0.4, 0.4, 0.4);
@@ -462,6 +618,10 @@
 					worldOctree.fromGraphNode( stitch );
 					scene.add(stitch);
 				});
+				
+
+
+
 
 				// loader.load('/public/tablet_folder/scene.gltf', function (gltf) {
 				// 	const folder = gltf.scene;
@@ -502,7 +662,23 @@
 			}
 
 
+			let frameCount = 0;
+			let targetIndex = 0;
 			function animate() {
+				if(robots){
+					// console.log(targetIndex);
+					const t = frameCount;
+					robots.position.lerp(targetPositions[targetIndex], t);
+					frameCount++;
+					if (frameCount > 1) {
+						frameCount = 0;
+						targetIndex++;
+						if (targetIndex >= targetPositions.length - 1) {
+							targetIndex = 0;
+						}
+					}
+				}
+
 				const deltaTime = Math.min( 0.05, clock.getDelta() ) / STEPS_PER_FRAME;
 				// we look for collisions in substeps to mitigate the risk of
 				// an object traversing another too quickly for detection.
@@ -511,6 +687,7 @@
 					updatePlayer( deltaTime );
 					updateSpheres( deltaTime );
 					teleportPlayerIfOob();
+					updateRobots( deltaTime );
 				}
 				renderer.render( scene, camera );
 				stats.update();
