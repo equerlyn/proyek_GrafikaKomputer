@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js - misc - octree collisions</title>
+		<title>Museum</title>
 		<meta charset=utf-8 />
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link type="text/css" rel="stylesheet" href="main.css">
@@ -36,7 +36,6 @@
 			import { Capsule } from 'three/addons/math/Capsule.js';
 
 			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-			import  TWEEN  from '@tweenjs/tween.js'
 
 			const clock = new THREE.Clock();
 
@@ -51,9 +50,9 @@
 			camera.rotation.order = 'YXZ';
 
 			//(pencahayaan setengah bola) yang digunakan untuk memberikan pencahayaan tambahan pada scene
-			const fillLight1 = new THREE.HemisphereLight( 0x8dc1de, 0x00668d, 0.5 );
-			fillLight1.position.set( 2, 1, 1 );
-			scene.add( fillLight1 );
+			// const fillLight1 = new THREE.HemisphereLight( 0x8dc1de, 0x00668d, 0.5 );
+			// fillLight1.position.set( 2, 1, 1 );
+			// scene.add( fillLight1 );
 
 			const directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
 			directionalLight.position.set( 0, 20, 0 );
@@ -85,8 +84,6 @@
 			// directionalLight2.shadow.radius = 10;
 			// directionalLight2.shadow.bias = - 0.00006;
 			// scene.add( directionalLight2 );
-
-
 
 			const container = document.getElementById( 'container' );
 
@@ -498,6 +495,7 @@
 				var robots;
 				loader.load('/eve.glb', function (gltf) {
 					const robot = gltf.scene;
+					robot.castShadow = true;
 					// Menyesuaikan skala, posisi, dan rotasi pigura
 					robot.scale.set(2,2,2);
 					robot.position.set(5, 0.5, 12);
@@ -513,89 +511,33 @@
 						robots.lookAt(playerCollider.end.x, 0.35 , playerCollider.end.z);
 					}
 				}
-
 				const curve = new THREE.CatmullRomCurve3([
-					new THREE.Vector3(5, 0.5, 12),
-					new THREE.Vector3(4, 0.5, 12),
-					new THREE.Vector3(3, 0.5, 12),
-					new THREE.Vector3(2, 0.5, 12),
-					new THREE.Vector3(1, 0.5, 12),
-					new THREE.Vector3(0, 0.5, 12),
-					new THREE.Vector3(-1, 0.5, 12),
-					new THREE.Vector3(-2, 0.5, 12),
-					new THREE.Vector3(-3, 0.5, 12),
-					new THREE.Vector3(-4, 0.5, 12),
-					new THREE.Vector3(-5, 0.5, 12),
-					new THREE.Vector3(-5, 0.5, 11),
-					new THREE.Vector3(-5, 0.5, 10),
-					new THREE.Vector3(-5, 0.5, 9),
-					new THREE.Vector3(-5, 0.5, 8),
-					new THREE.Vector3(-5, 0.5, 7),
-					new THREE.Vector3(-5, 0.5, 6),
-					new THREE.Vector3(-5, 0.5, 5),
-					new THREE.Vector3(-5, 0.5, 4),
-					new THREE.Vector3(-5, 0.5, 3),
-					new THREE.Vector3(-5, 0.5, 2),
-					new THREE.Vector3(-5, 0.5, 1),
-					new THREE.Vector3(-5, 0.5, 0),
-					new THREE.Vector3(-5, 0.5, -1),
-					new THREE.Vector3(-5, 0.5, -2),
-					new THREE.Vector3(-5, 0.5, -3),
-					new THREE.Vector3(-5, 0.5, -4),
-					new THREE.Vector3(-5, 0.5, -5),
-					new THREE.Vector3(-5, 0.5, -6),
-					new THREE.Vector3(-5, 0.5, -7),
-					new THREE.Vector3(-5, 0.5, -8),
-					new THREE.Vector3(-5, 0.5, -9),
-					new THREE.Vector3(-4, 0.5, -9),
-					new THREE.Vector3(-3, 0.5, -9),
-					new THREE.Vector3(-2, 0.5, -9),
-					new THREE.Vector3(-1, 0.5, -9),
-					new THREE.Vector3(0, 0.5, -9),
-					new THREE.Vector3(1, 0.5, -9),
-					new THREE.Vector3(2, 0.5, -9),
-					new THREE.Vector3(3, 0.5, -9),
-					new THREE.Vector3(4, 0.5, -9),
-					new THREE.Vector3(5, 0.5, -9),
-					new THREE.Vector3(5, 0.5, -8),
-					new THREE.Vector3(5, 0.5, -7),
-					new THREE.Vector3(5, 0.5, -6),
-					new THREE.Vector3(5, 0.5, -5),
-					new THREE.Vector3(5, 0.5, -4),
-					new THREE.Vector3(5, 0.5, -3),
-					new THREE.Vector3(5, 0.5, -2),
-					new THREE.Vector3(5, 0.5, -1),
-					new THREE.Vector3(5, 0.5, 0),
-					new THREE.Vector3(5, 0.5, 1),
-					new THREE.Vector3(5, 0.5, 2),
-					new THREE.Vector3(5, 0.5, 3),
-					new THREE.Vector3(5, 0.5, 4),
-					new THREE.Vector3(5, 0.5, 5),
-					new THREE.Vector3(5, 0.5, 6),
-					new THREE.Vector3(5, 0.5, 7),
-					new THREE.Vector3(5, 0.5, 8),
-					new THREE.Vector3(5, 0.5, 9),
-					new THREE.Vector3(5, 0.5, 10),
-					new THREE.Vector3(5, 0.5, 11),
-					new THREE.Vector3(5, 0.5, 12),
+					new THREE.Vector3(-5, 0.5, -11.2),
+					new THREE.Vector3(-4, 0.5, -11.2),
+					new THREE.Vector3(-3, 0.5, -11.2),
+					new THREE.Vector3(-2, 0.5, -11.2),
+					new THREE.Vector3(-1, 0.5, -11.2),
+					new THREE.Vector3(0, 0.5, -11.2),
+					new THREE.Vector3(1, 0.5, -11.2),
+					new THREE.Vector3(2, 0.5, -11.2),
+					new THREE.Vector3(3, 0.5, -11.2),
+					new THREE.Vector3(4, 0.5, -11.2),
+					new THREE.Vector3(5, 0.5, -11.2),
+					new THREE.Vector3(4, 0.5, -11.2),
+					new THREE.Vector3(3, 0.5, -11.2),
+					new THREE.Vector3(2, 0.5, -11.2),
+					new THREE.Vector3(1, 0.5, -11.2),
+					new THREE.Vector3(0, 0.5, -11.2),
+					new THREE.Vector3(-1, 0.5, -11.2),
+					new THREE.Vector3(-2, 0.5, -11.2),
+					new THREE.Vector3(-3, 0.5, -11.2),
+					new THREE.Vector3(-4, 0.5, -11.2),
+					new THREE.Vector3(-5, 0.5, -11.2),
 				]);
 				const targetPositions = curve.getPoints(500);
-				for (let i = 0; i < targetPositions.length - 1; i++) {
-					const direction = targetPositions[i + 1].clone().sub(targetPositions[i]);
-				}
-
-
-
-				//uncomment
-				loader.load('/public/vintage_table/scene.gltf', function (gltf) {
-					const meja = gltf.scene;
-					meja.scale.set(1.3, 1.3, 1.3);
-					meja.position.set(4.5, 0, -11.5);
-					meja.rotation.set(0,0, 0);
-
-					worldOctree.fromGraphNode( meja );
-					scene.add(meja);
-				});
+				// for (let i = 0; i < targetPositions.length - 1; i++) {
+				// 	const direction = targetPositions[i + 1].clone().sub(targetPositions[i]);
+				// }
 
 				loader.load('/public/wall_lamp/scene.gltf', function (gltf) {
 					const lampu = gltf.scene;
@@ -612,15 +554,30 @@
 				loader.load('/public/stitch_low-poly/scene.gltf', function (gltf) {
 					const stitch = gltf.scene;
 					stitch.scale.set(0.4, 0.4, 0.4);
-					stitch.position.set(4.6, 1.8, -11.5);
-					stitch.rotation.set(0, 5.6, 0);
-
+					stitch.position.set(4.6, 1.8, 1.8);
+					stitch.rotation.set(0, 4.7, 0);
+					stitch.castShadow = true
 					worldOctree.fromGraphNode( stitch );
 					scene.add(stitch);
 				});
-				
+				loader.load('/public/lounge_chair/scene.gltf', function (gltf) {
+					const kursi = gltf.scene;
+					kursi.scale.set(1.8, 1.8, 1.8);
+					kursi.position.set(5, 0, 3.5);
+					kursi.rotation.set(0, 4.7, 0);
+					kursi.castShadow = true
+					worldOctree.fromGraphNode( kursi );
+					scene.add(kursi);
+				});
+				loader.load('/public/vintage_table/scene.gltf', function (gltf) {
+					const meja = gltf.scene;
+					meja.scale.set(1.3, 1.3, 1.3);
+					meja.position.set(4.5, 0, 1.8);
+					meja.rotation.set(0,0, 0);
 
-
+					worldOctree.fromGraphNode( meja );
+					scene.add(meja);
+				});
 
 
 				// loader.load('/public/tablet_folder/scene.gltf', function (gltf) {
@@ -661,12 +618,10 @@
 				}
 			}
 
-
 			let frameCount = 0;
 			let targetIndex = 0;
 			function animate() {
 				if(robots){
-					// console.log(targetIndex);
 					const t = frameCount;
 					robots.position.lerp(targetPositions[targetIndex], t);
 					frameCount++;
@@ -680,8 +635,6 @@
 				}
 
 				const deltaTime = Math.min( 0.05, clock.getDelta() ) / STEPS_PER_FRAME;
-				// we look for collisions in substeps to mitigate the risk of
-				// an object traversing another too quickly for detection.
 				for ( let i = 0; i < STEPS_PER_FRAME; i ++ ) {
 					controls( deltaTime );
 					updatePlayer( deltaTime );
