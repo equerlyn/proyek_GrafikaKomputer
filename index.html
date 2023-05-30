@@ -476,7 +476,7 @@
 					// Membuat materi dengan tekstur
 					const material = new THREE.MeshStandardMaterial({
 						map: texture,
-						color: 0xded6c1,
+						// color: 0xded6c1,
 						// shadowSide: THREE.DoubleSide,
 					});
 					// Mengaplikasikan materi pada objek pigura
@@ -539,7 +539,7 @@
 				// 	const direction = targetPositions[i + 1].clone().sub(targetPositions[i]);
 				// }
 
-				loader.load('/public/wall_lamp/scene.gltf', function (gltf) {
+				loader.load('/wall_lamp/scene.gltf', function (gltf) {
 					const lampu = gltf.scene;
 					lampu.scale.set(0.01, 0.01, 0.01);
 					lampu.position.set(0, 6.4, -11.3);
@@ -551,16 +551,16 @@
 
 
 				// uncomment
-				loader.load('/public/stitch_low-poly/scene.gltf', function (gltf) {
+				loader.load('/stitch_low-poly/scene.gltf', function (gltf) {
 					const stitch = gltf.scene;
 					stitch.scale.set(1.6, 1.6, 1.6);
-					stitch.position.set(4.4, 2.8, 1.8);
+					stitch.position.set(4.3, 3, -6.2);
 					stitch.rotation.set(0, 4.7, 0);
 					stitch.castShadow = true
 					worldOctree.fromGraphNode( stitch );
 					scene.add(stitch);
 				});
-				loader.load('/public/sofa/scene.gltf', function (gltf) {
+				loader.load('/sofa/scene.gltf', function (gltf) {
 					const kursi = gltf.scene;
 					kursi.scale.set(2, 2, 2);
 					kursi.position.set(0, 0.5, 0);
@@ -569,44 +569,78 @@
 					worldOctree.fromGraphNode( kursi );
 					scene.add(kursi);
 				});
-				// loader.load('/public/vintage_table/scene.gltf', function (gltf) {
-				// 	const meja = gltf.scene;
-				// 	meja.scale.set(1.3, 1.3, 1.3);
-				// 	meja.position.set(4.5, 0, 1.8);
-				// 	meja.rotation.set(0,0, 0);
+				loader.load('/vintage_table/scene.gltf', function (gltf) {
+					const meja = gltf.scene;
+					meja.scale.set(1.3, 1.3, 1.3);
+					meja.position.set(-1.2, 0, 11.7);
+					meja.rotation.set(0,0, 0);
 
-				// 	worldOctree.fromGraphNode( meja );
-				// 	scene.add(meja);
-				// });
-
-
-				// loader.load('/public/tablet_folder/scene.gltf', function (gltf) {
-				// 	const folder = gltf.scene;
-				// 	folder.scale.set(0.04, 0.04, 0.04);
-				// 	folder.position.set(4.6, 1.1, -11.5);
-				// 	folder.rotation.set(0, 5, 0);
-				// 	const texture = new THREE.TextureLoader().load('/public/tablet_folder/textures/paper.jpg');
+					worldOctree.fromGraphNode( meja );
+					scene.add(meja);
+				});
+				// loader.load('public/piano_with_chair/scene.gltf', function (gltf) {
+				// 	const piano = gltf.scene;
+				// 	piano.scale.set(0.15, 0.15, 0.15);
+				// 	piano.position.set(3.1, 0, 11.3);
+				// 	piano.rotation.set(0,4, 0);
+				// 	const texture = new THREE.TextureLoader().load('/public/low_poly_-_piano/textures/Mat_Piano_baseColor.png');
 				// 	const material = new THREE.MeshStandardMaterial({
 				// 		map: texture,
-				// 		color: 0xa2a2a2,
-				// 	});
-				// 	const scale = 3.2; // Faktor skala untuk mengecilkan tekstur
-				// 	material.map.repeat.x = scale; // Mengecilkan tekstur secara horizontal
-				// 	material.map.repeat.y = scale; // Mengecilkan tekstur secara vertikal
-
-				// 	const offsetX = -0.4; // Geser tekstur secara horizontal
-				// 	const offsetY = -0.7; // Geser tekstur secara vertikal
-				// 	material.map.offset.x = offsetX; // Menggeser tekstur secara horizontal
-				// 	material.map.offset.y = offsetY; // Menggeser tekstur secara vertikal
-
-				// 	folder.traverse(function (child) { 
+				// 		// color: 0x0000
+				// 	})
+				// 	piano.traverse(function (child) { 
 				// 		if (child instanceof THREE.Mesh) { 
 				// 			child.material = material;
 				// 		}
 				// 	});
-				// 	// worldOctree.fromGraphNode( folder );
-				// 	scene.add(folder);
+				// 	worldOctree.fromGraphNode( piano );
+				// 	scene.add(piano);
 				// });
+				loader.load('public/low_poly_-_piano/scene.gltf', function (gltf) {
+					const piano = gltf.scene;
+					piano.scale.set(6.1, 6.1, 6.1);
+					piano.position.set(4.9, 0, 10.6);
+					piano.rotation.set(0,0, 0);
+					const texture = new THREE.TextureLoader().load('/public/low_poly_-_piano/textures/Mat_Piano_baseColor.png');
+					const material = new THREE.MeshStandardMaterial({
+						map: texture,
+						// color: 0x0000
+					})
+					piano.traverse(function (child) { 
+						if (child instanceof THREE.Mesh) { 
+							child.material = material;
+						}
+					});
+					worldOctree.fromGraphNode( piano );
+					scene.add(piano);
+				});
+				loader.load('/tablet_folder/scene.gltf', function (gltf) {
+					const folder = gltf.scene;
+					folder.scale.set(0.04, 0.04, 0.04);
+					folder.position.set(-1.2, 1.1, 11.8);
+					folder.rotation.set(0, 3.5, 0);
+					const texture = new THREE.TextureLoader().load('/tablet_folder/textures/paper.jpg');
+					const material = new THREE.MeshStandardMaterial({
+						map: texture,
+						color: 0xa2a2a2,
+					});
+					const scale = 3.2; // Faktor skala untuk mengecilkan tekstur
+					material.map.repeat.x = scale; // Mengecilkan tekstur secara horizontal
+					material.map.repeat.y = scale; // Mengecilkan tekstur secara vertikal
+
+					const offsetX = -0.4; // Geser tekstur secara horizontal
+					const offsetY = -0.7; // Geser tekstur secara vertikal
+					material.map.offset.x = offsetX; // Menggeser tekstur secara horizontal
+					material.map.offset.y = offsetY; // Menggeser tekstur secara vertikal
+
+					folder.traverse(function (child) { 
+						if (child instanceof THREE.Mesh) { 
+							child.material = material;
+						}
+					});
+					// worldOctree.fromGraphNode( folder );
+					scene.add(folder);
+				});
 
 			function teleportPlayerIfOob() {
 				if ( camera.position.y <= -25 ) {

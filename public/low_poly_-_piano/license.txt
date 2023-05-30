@@ -1,0 +1,11 @@
+Model Information:
+* title:	Low Poly - Piano
+* source:	https://sketchfab.com/3d-models/low-poly-piano-4acf8380037d4153a006c3b57d1dd2b6
+* author:	Mystyc (https://sketchfab.com/Mystyc)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Low Poly - Piano" (https://sketchfab.com/3d-models/low-poly-piano-4acf8380037d4153a006c3b57d1dd2b6) by Mystyc (https://sketchfab.com/Mystyc) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

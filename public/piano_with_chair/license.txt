@@ -1,0 +1,11 @@
+Model Information:
+* title:	Piano With Chair
+* source:	https://sketchfab.com/3d-models/piano-with-chair-1f5246ceecb14f22bc547911e5e430ff
+* author:	3DDomino (https://sketchfab.com/3DDomino)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Piano With Chair" (https://sketchfab.com/3d-models/piano-with-chair-1f5246ceecb14f22bc547911e5e430ff) by 3DDomino (https://sketchfab.com/3DDomino) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
