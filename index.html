@@ -42,8 +42,20 @@
 			const scene = new THREE.Scene();
 			const textureLoader = new THREE.TextureLoader();
 			scene.background = textureLoader.load("sky.jpg"); 
+			// scene.background = new THREE.Color(0x041126);
+			// // Create the background sphere geometry
+			// const backgroundGeometry = new THREE.SphereGeometry(500, 32, 32);
+			// // Load the background image texture
+			// const backgroundTextureLoader = new THREE.TextureLoader();
+			// const backgroundTexture = backgroundTextureLoader.load('sky.jpeg');
+			// // Create a material with the background texture
+			// const backgroundMaterial = new THREE.MeshBasicMaterial({ map: backgroundTexture, side: THREE.BackSide });
+			// // Create a mesh with the geometry and material for the background
+			// const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
+			// scene.add(backgroundMesh); 
+ 
 			scene.fog = new THREE.Fog( 0xffffee, 0, 500 );
-
+ 
 			var pertama=true;
 			const camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 1000 );
 			
@@ -485,7 +497,7 @@
 							child.material = material;
 						}
 					});
-					worldOctree.fromGraphNode( pigura );
+					//worldOctree.fromGraphNode( pigura );
 					scene.add(pigura);
 				});
 
@@ -502,7 +514,7 @@
 					// robot.rotation.copy(playerCollider.end)
 					robot.receiveShadow = true;
 					robots=robot;
-					worldOctree.fromGraphNode( robot );
+					//worldOctree.fromGraphNode( robot );
 					scene.add(robot);
 				});
 				function updateRobots(deltaTime) {
@@ -545,7 +557,7 @@
 					lampu.position.set(0, 6.4, -11.3);
 					lampu.rotation.set(0,0, 0);
 
-					worldOctree.fromGraphNode( lampu );
+					//worldOctree.fromGraphNode( lampu );
 					scene.add(lampu);
 				});
 
@@ -553,12 +565,40 @@
 				// uncomment
 				loader.load('/stitch_low-poly/scene.gltf', function (gltf) {
 					const stitch = gltf.scene;
-					stitch.scale.set(1.6, 1.6, 1.6);
-					stitch.position.set(4.3, 3, -6.2);
+					stitch.scale.set(1.7, 1.7, 1.7);
+					stitch.position.set(4.3, 3.2, -6.2);
 					stitch.rotation.set(0, 4.7, 0);
 					stitch.castShadow = true
-					worldOctree.fromGraphNode( stitch );
+					//worldOctree.fromGraphNode( stitch );
 					scene.add(stitch);
+				});
+				loader.load('/public/old_pinocchio.glb', function (gltf) {
+					const pinochio = gltf.scene;
+					pinochio.receiveShadow = true;
+					pinochio.scale.set(0.48, 0.48, 0.48);
+					pinochio.position.set(4.7, 2, -2.8);
+					pinochio.rotation.set(0, 4.7, 0);
+					pinochio.castShadow = true
+					//worldOctree.fromGraphNode( pinochio );
+					scene.add(pinochio);
+				});
+				loader.load('/public/painting_lowpoly.glb', function (gltf) {
+					const foto = gltf.scene;
+					foto.scale.set(2, 2, 2);
+					foto.position.set(-5.6, 3.2, -7.9);
+					foto.rotation.set(0, 1.6, 0);
+					foto.castShadow = true
+					//worldOctree.fromGraphNode( foto );
+					scene.add(foto);
+				});
+				loader.load('public/low_poly_horror_art_studio.glb', function (gltf) {
+					const lukisan = gltf.scene;
+					lukisan.scale.set(1.9, 1.9, 1.9);
+					lukisan.position.set(-2.7, 0, -1.2);
+					lukisan.rotation.set(0, 0, 0);
+					lukisan.castShadow = true
+					// worldOctree.fromGraphNode( lukisan );
+					scene.add(lukisan);
 				});
 				loader.load('/sofa/scene.gltf', function (gltf) {
 					const kursi = gltf.scene;
@@ -566,8 +606,17 @@
 					kursi.position.set(0, 0.5, 0);
 					kursi.rotation.set(0, 0, 0);
 					kursi.castShadow = true
-					worldOctree.fromGraphNode( kursi );
+					// worldOctree.fromGraphNode( kursi );
 					scene.add(kursi);
+				});
+				loader.load('/public/fiji_water_bottle.glb', function (gltf) {
+					const botol = gltf.scene;
+					botol.scale.set(0.001, 0.001, 0.001);
+					botol.position.set(0, 1, -2.3);
+					botol.rotation.set(0, 0, 0);
+					botol.castShadow = true
+					// worldOctree.fromGraphNode( botol );
+					scene.add(botol);
 				});
 				loader.load('/vintage_table/scene.gltf', function (gltf) {
 					const meja = gltf.scene;
@@ -575,45 +624,34 @@
 					meja.position.set(-1.2, 0, 11.7);
 					meja.rotation.set(0,0, 0);
 
-					worldOctree.fromGraphNode( meja );
+					//worldOctree.fromGraphNode( meja );
 					scene.add(meja);
 				});
-				// loader.load('public/piano_with_chair/scene.gltf', function (gltf) {
-				// 	const piano = gltf.scene;
-				// 	piano.scale.set(0.15, 0.15, 0.15);
-				// 	piano.position.set(3.1, 0, 11.3);
-				// 	piano.rotation.set(0,4, 0);
-				// 	const texture = new THREE.TextureLoader().load('/public/low_poly_-_piano/textures/Mat_Piano_baseColor.png');
-				// 	const material = new THREE.MeshStandardMaterial({
-				// 		map: texture,
-				// 		// color: 0x0000
-				// 	})
-				// 	piano.traverse(function (child) { 
-				// 		if (child instanceof THREE.Mesh) { 
-				// 			child.material = material;
-				// 		}
-				// 	});
-				// 	worldOctree.fromGraphNode( piano );
-				// 	scene.add(piano);
-				// });
-				loader.load('public/low_poly_-_piano/scene.gltf', function (gltf) {
+				loader.load('public/jacket_gray_painting.glb', function (gltf) {
+					const baju = gltf.scene;
+					baju.scale.set(0.007, 0.007, 0.007);
+					baju.position.set(6.8, 3.7, 9);
+					baju.rotation.set(0,-1.6, 0);
+					//worldOctree.fromGraphNode( baju );
+					scene.add(baju);
+				});
+				loader.load('public/piano_with_chair/piano_with_chair.glb', function (gltf) {
 					const piano = gltf.scene;
-					piano.scale.set(6.1, 6.1, 6.1);
-					piano.position.set(4.9, 0, 10.6);
-					piano.rotation.set(0,0, 0);
-					const texture = new THREE.TextureLoader().load('/public/low_poly_-_piano/textures/Mat_Piano_baseColor.png');
-					const material = new THREE.MeshStandardMaterial({
-						map: texture,
-						// color: 0x0000
-					})
-					piano.traverse(function (child) { 
-						if (child instanceof THREE.Mesh) { 
-							child.material = material;
-						}
-					});
-					worldOctree.fromGraphNode( piano );
+					piano.scale.set(0.15, 0.15, 0.15);
+					piano.position.set(3.1, 0, 11.3);
+					piano.rotation.set(0,4, 0);
+					//worldOctree.fromGraphNode( piano );
 					scene.add(piano);
 				});
+				loader.load('public/chinese_lettering_a-board_advertisement.glb', function (gltf) {
+					const chinese = gltf.scene;
+					chinese.scale.set(0.6, 0.6, 0.6);
+					chinese.position.set(-1.1, -0.2, 14);
+					chinese.rotation.set(0,1, 0);
+					//worldOctree.fromGraphNode( chinese );
+					scene.add(chinese);
+				});
+
 				loader.load('/tablet_folder/scene.gltf', function (gltf) {
 					const folder = gltf.scene;
 					folder.scale.set(0.04, 0.04, 0.04);
