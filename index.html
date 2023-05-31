@@ -401,7 +401,7 @@
 
 			const loader = new GLTFLoader();
 			
-			loader.load( 'ruangan3.gltf', ( gltf ) => {
+			loader.load( 'ruangan.gltf', ( gltf ) => {
 				scene.add( gltf.scene );
 				worldOctree.fromGraphNode( gltf.scene );
 				gltf.scene.traverse( child => {
