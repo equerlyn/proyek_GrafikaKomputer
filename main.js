@@ -224,6 +224,7 @@ function animate() {
 
         direction.z = Number( moveForward ) - Number( moveBackward );
         direction.x = Number( moveRight ) - Number( moveLeft );
+        
         direction.normalize(); // this ensures consistent movements in all directions
 
         if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta;

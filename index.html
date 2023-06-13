@@ -63,7 +63,7 @@
 			// fillLight1.position.set( 2, 1, 1 );
 			// scene.add( fillLight1 );
 
-			const directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
+			const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.6 );
 			directionalLight.position.set( 0, 20, 0 );
 			// directionalLight.castShadow = true;	
 			// directionalLight.shadow.camera.near = 0.01;
@@ -78,21 +78,77 @@
 			// directionalLight.shadow.bias = - 0.00006;
 			scene.add( directionalLight );
 
-			// const directionalLight2 = new THREE.DirectionalLight( 0xded6c1, 1 );
-			// directionalLight2.position.set( 0, 6.35, -12 );
-			// directionalLight2.target.position.set( -0, 0, -11 );
-			// directionalLight2.castShadow = true;	
+			const directionalLight4 = new THREE.DirectionalLight( 0xffffff, 0.1 );
+			directionalLight4.position.set( 0, 6, -8 );
+			directionalLight4.target.position.set(4, 2, 10);
+			const spherez2 = new THREE.SphereGeometry( 0.5, 16, 8 );
+			directionalLight4.add( new THREE.Mesh( spherez2, new THREE.MeshBasicMaterial( { color: 0xff0000 } ) ) );
+			directionalLight4.castShadow = true;	
+			directionalLight4.shadow.camera.near = 0.01;
+			directionalLight4.shadow.camera.far = 500;
+			directionalLight4.shadow.camera.right = 10;
+			directionalLight4.shadow.camera.left = - 10;
+			directionalLight4.shadow.camera.top	= 10;
+			directionalLight4.shadow.camera.bottom = -10;
+			directionalLight4.shadow.mapSize.width = 1024;
+			directionalLight4.shadow.mapSize.height = 1024;
+			directionalLight4.shadow.radius = 5;
+			// directionalLight4.shadow.bias = - 0.00006;
+			scene.add( directionalLight4 );
+			scene.add( directionalLight4.target );
+			const temparah=new THREE.Mesh( spherez2, new THREE.MeshBasicMaterial( { color: 0xff0000 } ) ) ;
+			temparah.position.set(4, 2, 10);
+			scene.add( temparah );
+
+			//painting utama
+			const directionalLight2 = new THREE.SpotLight( 0xd4b300, 1 );
+			directionalLight2.position.set( 0, 6.4, -12);
+			directionalLight2.target.position.set(0, 0, -12);
+			// const spherez2 = new THREE.SphereGeometry( 0.5, 16, 8 );
+			// directionalLight2.add( new THREE.Mesh( spherez2, new THREE.MeshBasicMaterial( { color: 0xff0000 } ) ) );
+			directionalLight2.angle=0.45;
+			directionalLight2.penumbra=0.5;
+			directionalLight2.castShadow = true;	
 			// directionalLight2.shadow.camera.near = 0.01;
 			// directionalLight2.shadow.camera.far = 500;
-			// directionalLight2.shadow.camera.right = 0;
-			// directionalLight2.shadow.camera.left = - 40;
-			// directionalLight2.shadow.camera.top	= 0;
-			// directionalLight2.shadow.camera.bottom = -30;
-			// directionalLight2.shadow.mapSize.width = 1024;
-			// directionalLight2.shadow.mapSize.height = 1024;
-			// directionalLight2.shadow.radius = 10;
-			// directionalLight2.shadow.bias = - 0.00006;
-			// scene.add( directionalLight2 );
+			// directionalLight2.shadow.camera.right = 10;
+			// directionalLight2.shadow.camera.left = - 10;
+			// directionalLight2.shadow.camera.top	= 10;
+			// directionalLight2.shadow.camera.bottom = -10;
+			// directionalLight2.shadow.mapSize.width = 6000;
+			// directionalLight2.shadow.mapSize.height = 6000;
+			directionalLight2.shadow.radius = 10;
+			directionalLight2.shadow.bias = - 0.00006;
+			scene.add( directionalLight2 );
+			scene.add( directionalLight2.target );
+			// const temparah=new THREE.Mesh( spherez2, new THREE.MeshBasicMaterial( { color: 0xff0000 } ) ) ;
+			// temparah.position.set(0, 1, 10);
+			// scene.add( temparah );
+
+			//painting samping
+			const directionalLight3 = new THREE.SpotLight( 0xd4b300, 1 );
+			directionalLight3.position.set( -5.6, 6.4, -7.9);
+			directionalLight3.target.position.set(-5.6, 0, -7.9);
+			// directionalLight3.add( new THREE.Mesh( spherez2, new THREE.MeshBasicMaterial( { color: 0xff0000 } ) ) );
+			directionalLight3.angle=0.45;
+			directionalLight3.penumbra=0.5;
+			directionalLight3.castShadow = true;	
+			// directionalLight3.shadow.camera.near = 0.01;
+			// directionalLight3.shadow.camera.far = 500;
+			// directionalLight3.shadow.camera.right = 10;
+			// directionalLight3.shadow.camera.left = - 10;
+			// directionalLight3.shadow.camera.top	= 10;
+			// directionalLight3.shadow.camera.bottom = -10;
+			// directionalLight3.shadow.mapSize.width = 6000;
+			// directionalLight3.shadow.mapSize.height = 6000;
+			directionalLight3.shadow.radius = 10;
+			directionalLight3.shadow.bias = - 0.00006;
+			scene.add( directionalLight3 );
+			scene.add( directionalLight3.target );
+			// const temparah=new THREE.Mesh( spherez2, new THREE.MeshBasicMaterial( { color: 0xff0000 } ) ) ;
+			// temparah.position.set(0, 1, 10);
+			// scene.add( temparah );
+
 
 			const container = document.getElementById( 'container' );
 
@@ -403,10 +459,12 @@
 			
 			loader.load( 'ruangan.gltf', ( gltf ) => {
 				scene.add( gltf.scene );
+				gltf.scene.castShadow = false;
+				// gltf.scene.receiveShadow = true;
 				worldOctree.fromGraphNode( gltf.scene );
 				gltf.scene.traverse( child => {
 					if ( child.isMesh ) {
-						child.castShadow = true;
+						child.castShadow = false;
 						child.receiveShadow = true;
 						// if ( child.material.map ) {
 						// 	child.material.map.anisotropy = 4;
@@ -443,6 +501,7 @@
 				floor.position.x=0;
 				floor.position.y=0;
 				floor.position.z=0;
+				floor.receiveShadow = true;
 				floor.rotation.x = Math.PI / 180 * -90;
 				worldOctree.fromGraphNode( floor );
 				scene.add( floor ); 
@@ -463,6 +522,7 @@
 				var floor3 = new THREE.Mesh( geometry3, material3 );
 				floor3.position.x=0;
 				floor3.position.y=0.012;
+				floor3.receiveShadow = true;
 				// floor3.position.y=3;
 				floor3.position.z=0;
 				floor3.rotation.x = Math.PI / 180 * -90;
@@ -509,7 +569,7 @@
 					// robot.rotation.copy(playerCollider.end)
 					robot.receiveShadow = true;
 					robots=robot;
-					//worldOctree.fromGraphNode( robot );
+					// worldOctree.fromGraphNode( robot );
 					scene.add(robot);
 				});
 				function updateRobots(deltaTime) {
@@ -561,8 +621,8 @@
 					stitch.scale.set(1.7, 1.7, 1.7);
 					stitch.position.set(4.3, 3.2, -6.2);
 					stitch.rotation.set(0, 4.7, 0);
-					stitch.castShadow = true
-					//worldOctree.fromGraphNode( stitch );
+					stitch.castShadow = true;
+					worldOctree.fromGraphNode( stitch );
 					scene.add(stitch);
 				});
 				loader.load('/old_pinocchio.glb', function (gltf) {
@@ -572,7 +632,7 @@
 					pinochio.position.set(4.7, 2, -2.8);
 					pinochio.rotation.set(0, 4.7, 0);
 					pinochio.castShadow = true
-					//worldOctree.fromGraphNode( pinochio );
+					// worldOctree.fromGraphNode( pinochio );
 					scene.add(pinochio);
 				});
 				loader.load('/painting_lowpoly.glb', function (gltf) {
@@ -605,7 +665,7 @@
 				loader.load('/stone_runerary_relief.glb', function (gltf) {
 					const relief1 = gltf.scene;
 					relief1.scale.set(0.0016, 0.0016, 0.0016);
-					relief1.position.set(-5.6, 4, 4.8);
+					relief1.position.set(-5.4, 4, 4.8);
 					relief1.rotation.set(0, 1.6, 0);
 					relief1.castShadow = true
 					// worldOctree.fromGraphNode( relief1 );
@@ -617,7 +677,8 @@
 					kursi.scale.set(2, 2, 2);
 					kursi.position.set(0, 0.5, 0);
 					kursi.rotation.set(0, 0, 0);
-					kursi.castShadow = true
+					kursi.castShadow = true;
+					kursi.receiveShadow=true;
 					// worldOctree.fromGraphNode( kursi );
 					scene.add(kursi);
 				});
@@ -626,19 +687,23 @@
 					botol.scale.set(0.001, 0.001, 0.001);
 					botol.position.set(0, 1, -2.3);
 					botol.rotation.set(0, 0, 0);
-					botol.castShadow = true
+					botol.castShadow = true;
 					// worldOctree.fromGraphNode( botol );
 					scene.add(botol);
 				});
-				// loader.load('/vintage_table/scene.gltf', function (gltf) {
-				// 	const meja = gltf.scene;
-				// 	meja.scale.set(1.3, 1.3, 1.3);
-				// 	meja.position.set(-1.2, 0, 11.7);
-				// 	meja.rotation.set(0,0, 0);
 
-				// 	//worldOctree.fromGraphNode( meja );
-				// 	scene.add(meja);
-				// });
+
+
+
+				loader.load('/vintage_table/scene.gltf', function (gltf) {
+					const meja = gltf.scene;
+					meja.scale.set(1.3, 1.3, 1.3);
+					meja.position.set(-1.2, 0, 11.7);
+					meja.rotation.set(0,0, 0);
+
+					//worldOctree.fromGraphNode( meja );
+					scene.add(meja);
+				});
 				loader.load('/small_baroque_table.glb', function (gltf) {
 					const meja = gltf.scene;
 					meja.scale.set(0.002, 0.002, 0.002);
@@ -683,7 +748,7 @@
 				});
 				
 				function checkDistance(camera) {
-					console.log(camera.position.y)
+					// console.log(camera.position.y)
 					if (camera.position.x >= 0.5 && camera.position.y >= 0 && camera.position.z  >=8 && camera.position.x <= 3.5 && camera.position.z <= 12){
 						sound.play();
 					} else {
